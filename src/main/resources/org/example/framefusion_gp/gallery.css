@@ -1,0 +1,51 @@
+.titleBg{
+    -fx-background-color: #7E82FF;
+}
+
+.title{
+    -fx-font-family: "Bodoni MT";
+    -fx-font-size: 25px;
+    -fx-text-fill: #fff;
+    -fx-padding: 0 0 0 20px;
+}
+
+.blackBg{
+    -fx-background-color: #000;
+}
+
+.image-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-alignment: center;
+    -fx-padding: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.heart-label {
+    -fx-text-fill: red;
+    -fx-font-size: 16px;
+    -fx-padding: 5;
+}
+
+.button{
+    -fx-background-color: #ECECFF;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-font-family: Georgia;
+}
+
+.button:hover{
+    -fx-background-color: #7E82FF;
+    -fx-text-fill: white;
+}
+
+#galleryBtn{
+    -fx-font-size: 16px;
+}
+
+#videoBtn{
+    -fx-font-size: 16px;
+}
