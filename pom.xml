@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -6,6 +10,7 @@
     <groupId>org.example</groupId>
     <artifactId>FrameFusion_GP</artifactId>
     <version>1.0-SNAPSHOT</version>
+<<<<<<< HEAD
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,15 +20,36 @@
     </properties>
 
     <dependencies>
+=======
+    <name>FrameFusion_GP</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>5.10.2</junit.version>
+    </properties>
+
+    <dependencies>
+        <!--        mysql-->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.2.0</version>  <!-- Latest available version on Maven Central -->
+        </dependency>
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
 
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
+<<<<<<< HEAD
             <version>${javafx.version}</version>
+=======
+            <version>21</version>
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
+<<<<<<< HEAD
             <version>${javafx.version}</version>
         </dependency>
         <dependency>
@@ -39,14 +65,35 @@
         </dependency>
 
         <dependency>
+=======
+            <version>21</version>
+        </dependency>
+        <dependency>
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
             <groupId>org.kordamp.ikonli</groupId>
             <artifactId>ikonli-javafx</artifactId>
             <version>12.3.1</version>
         </dependency>
+<<<<<<< HEAD
+=======
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
     </dependencies>
 
     <build>
         <plugins>
+<<<<<<< HEAD
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -58,10 +105,22 @@
                 </configuration>
             </plugin>
 
+=======
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
+<<<<<<< HEAD
                 <configuration>
                     <mainClass>org.example.framefusion_gp.FrameFusion</mainClass>
                 </configuration>
@@ -69,3 +128,25 @@
         </plugins>
     </build>
 </project>
+=======
+                <executions>
+                    <execution>
+                        <!-- Default configuration for running with: mvn clean javafx:run -->
+                        <id>default-cli</id>
+                        <configuration>
+                            <mainClass>org.example.framefusion_gp/org.example.framefusion_gp.HelloApplication
+                            </mainClass>
+                            <launcher>app</launcher>
+                            <jlinkZipName>app</jlinkZipName>
+                            <jlinkImageName>app</jlinkImageName>
+                            <noManPages>true</noManPages>
+                            <stripDebug>true</stripDebug>
+                            <noHeaderFiles>true</noHeaderFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4

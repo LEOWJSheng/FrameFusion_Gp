@@ -35,6 +35,12 @@ public class GalleryController {
     @FXML
     private Label emptyImgLabel;
 
+<<<<<<< HEAD
+=======
+    @FXML
+    private Button makeVideoBtn;
+
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
     private static final int IMAGE_SIZE = 120;
     private final Set<StackPane> selectedImages = new HashSet<>();
 
@@ -43,6 +49,23 @@ public class GalleryController {
         addImageBtn.setOnAction(e -> uploadImage());
         loadImages();  // Load images on app start
         HomeBtn.setOnAction(e -> goToHome());
+<<<<<<< HEAD
+=======
+        makeVideoBtn.setDisable(true);
+        makeVideoBtn.setOnAction(e -> makeVideo());
+    }
+
+    private void makeVideo() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("videoController.fxml"));
+            Parent videoRoot = loader.load();
+            Scene scene = new Scene(videoRoot);
+            Stage stage = (Stage) makeVideoBtn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
     }
 
     public void loadImages() {
@@ -55,6 +78,7 @@ public class GalleryController {
         }
 
         for (ImageData data : images) {
+<<<<<<< HEAD
             StackPane stack = new StackPane();
             stack.setPrefSize(130, 130);
             stack.getStyleClass().add("image-cell");
@@ -66,6 +90,28 @@ public class GalleryController {
             StackPane.setAlignment(view, Pos.CENTER);
             stack.getChildren().add(view);
 
+=======
+            // Container for image + optional heart icon
+            StackPane stack = new StackPane();
+            stack.setPrefSize(130, 130);
+            stack.setMinSize(130, 130);
+            stack.setMaxSize(130, 130);
+
+            // Style container for border, shadow, etc.
+            stack.getStyleClass().add("image-cell");
+
+            // Image view setup
+            ImageView view = new ImageView(new Image("file:" + data.getPath()));
+            //make sure every photo in gallery have same size and fit ratio
+            view.setPreserveRatio(true);
+            view.setFitWidth(IMAGE_SIZE);
+            view.setFitHeight(IMAGE_SIZE);
+
+            stack.getChildren().add(view);
+            StackPane.setAlignment(view, Pos.CENTER);
+
+            // Add heart icon if annotated
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
             if (data.getAnnotation() != null && !data.getAnnotation().isEmpty()) {
                 Label heart = new Label("♥");
                 heart.getStyleClass().add("heart-label");
@@ -73,6 +119,7 @@ public class GalleryController {
                 stack.getChildren().add(heart);
             }
 
+<<<<<<< HEAD
             // Menu Button (⋮)
             MenuButton menuButton = new MenuButton("⋮");
             menuButton.setStyle("-fx-font-size: 14px; -fx-background-color: transparent;");
@@ -97,14 +144,35 @@ public class GalleryController {
                 if (e.isControlDown()) {
                     if (selectedImages.contains(stack)) {
                         stack.setStyle("");
+=======
+            // Click: Ctrl = multi-select; else open editor
+            stack.setOnMouseClicked(e -> {
+                if (e.isControlDown()) {
+                    if (selectedImages.contains(stack)) {
+                        stack.setStyle(""); // Unhighlight
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
                         selectedImages.remove(stack);
                     } else {
                         stack.setStyle("-fx-border-color: red; -fx-border-width: 2;");
                         selectedImages.add(stack);
                     }
+<<<<<<< HEAD
                 }
             });
 
+=======
+                    makeVideoBtn.setDisable(selectedImages.size() <= 1);
+                } else {
+                    try {
+                        openAnnotationEditor(data);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
+            // Add to galleryFlowPane
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
             galleryFlowPane.getChildren().add(stack);
         }
     }
@@ -134,6 +202,10 @@ public class GalleryController {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setHeaderText("Add annotation (optional)");
             dialog.setContentText("Annotation:");
+<<<<<<< HEAD
+=======
+
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
             Optional<String> result = dialog.showAndWait();
             String annotation = result.orElse("");
 
@@ -154,6 +226,7 @@ public class GalleryController {
             loadImages();
         }
     }
+<<<<<<< HEAD
 
     private void openImageEditor(String imagePath) {
         try {
@@ -171,4 +244,6 @@ public class GalleryController {
             e.printStackTrace();
         }
     }
+=======
+>>>>>>> b228602903204b8465b21a355254ea3b7cc347d4
 }
