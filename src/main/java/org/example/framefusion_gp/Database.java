@@ -48,4 +48,44 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+    public static class VideoData {
+        public final int    id;
+        public final String path;
+        public VideoData(int id, String path) {
+            this.id = id;
+            this.path = path;
+        }
+    }
+
+    /** Returns all saved videos (id + path) */
+    public static List<VideoData> getVideos() {
+        List<VideoData> out = new ArrayList<>();
+        String sql = "SELECT id, video_path FROM videos ORDER BY id";
+        try (Connection c = connectDb();
+             PreparedStatement p = c.prepareStatement(sql);
+             ResultSet rs = p.executeQuery()) {
+            while (rs.next()) {
+                out.add(new VideoData(
+                        rs.getInt("id"),
+                        rs.getString("video_path")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+
+    /** Persist one exported video (path only) */
+    public static void insertVideo(String path) {
+        String sql = "INSERT INTO videos (video_path) VALUES (?)";
+        try (Connection c = connectDb();
+             PreparedStatement p = c.prepareStatement(sql)) {
+            p.setString(1, path);
+            p.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

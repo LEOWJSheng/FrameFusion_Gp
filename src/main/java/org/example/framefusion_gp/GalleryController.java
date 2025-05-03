@@ -54,6 +54,22 @@ public class GalleryController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("videoController.fxml"));
             Parent videoRoot = loader.load();
+
+            // Access the controller
+            VideoController videoController = loader.getController();
+
+            // Extract selected image files
+            List<File> selectedFiles = new ArrayList<>();
+            for (StackPane pane : selectedImages) {
+                ImageView imageView = (ImageView) pane.getChildren().get(0);
+                String url = imageView.getImage().getUrl().replace("file:", "");
+                selectedFiles.add(new File(url));
+            }
+
+            // Pass selected files to the video controller
+            videoController.importImages(selectedFiles);
+
+            // Show the video editor
             Scene scene = new Scene(videoRoot);
             Stage stage = (Stage) makeVideoBtn.getScene().getWindow();
             stage.setScene(scene);
@@ -61,6 +77,7 @@ public class GalleryController {
             e.printStackTrace();
         }
     }
+
 
     public void loadImages() {
         galleryFlowPane.getChildren().clear();
@@ -118,7 +135,6 @@ public class GalleryController {
                     }
                 }
             });
-
             // Add to galleryFlowPane
             galleryFlowPane.getChildren().add(stack);
         }
