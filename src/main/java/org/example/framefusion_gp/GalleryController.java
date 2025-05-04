@@ -34,6 +34,9 @@ public class GalleryController {
 
     @FXML
     private Label emptyImgLabel;
+    
+    @FXML
+    private Button composeLayoutBtn;
 
     private static final int IMAGE_SIZE = 120;
     private final Set<StackPane> selectedImages = new HashSet<>();
@@ -171,4 +174,39 @@ public class GalleryController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void openLayoutCompose() {
+        if (selectedImages.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "No images selected.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("layout_page.fxml"));
+            Parent root = loader.load();
+
+            LayoutController controller = loader.getController();
+
+            List<String> paths = selectedImages.stream()
+                    .map(stack -> {
+                        ImageView iv = (ImageView) stack.getChildren().get(0);
+                        String url = iv.getImage().getUrl();
+                        return url.replace("file:", "");
+                    })
+                    .toList();
+
+            controller.setSelectedImages(paths);
+
+            Stage stage = new Stage();
+            stage.setTitle("Composite Image");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

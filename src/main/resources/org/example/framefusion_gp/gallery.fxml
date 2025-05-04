@@ -42,10 +42,11 @@
       <AnchorPane prefHeight="120.0" prefWidth="1100.0" styleClass="blackBg" stylesheets="@gallery.css">
          <children>
             <Button fx:id="HomeBtn" layoutX="41.0" layoutY="27.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="104.0" text="Home" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
-            <Button fx:id="addImageBtn" layoutX="935.0" layoutY="28.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="104.0" text="Add" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+            <Button fx:id="addImageBtn" layoutX="968.0" layoutY="49.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="104.0" text="Add" AnchorPane.bottomAnchor="19.799999999999997" AnchorPane.rightAnchor="28.0">
                <font>
                   <Font name="Georgia" size="14.0" />
                </font></Button>
+            <Button fx:id="composeLayoutButton" layoutX="723.0" layoutY="49.0" mnemonicParsing="false" onAction="#openLayoutCompose" text="Collage Image" />
          </children>
          <VBox.margin>
             <Insets />
