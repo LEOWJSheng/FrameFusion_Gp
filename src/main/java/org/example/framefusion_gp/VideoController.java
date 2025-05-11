@@ -30,7 +30,8 @@ public class VideoController {
     @FXML private ToggleButton graphicsBtn;
     @FXML private ScrollPane scrollPanel;
     @FXML public TilePane tilePanel;
-    @FXML private AnchorPane mediaPlayerPane;
+    @FXML private StackPane mediaPlayerPane;
+    @FXML private AnchorPane overlayPane;
     @FXML public HBox videoTrack;
     @FXML public HBox textTrack;
     @FXML private Rectangle timelineTrack;
@@ -291,14 +292,13 @@ public class VideoController {
             evt.consume();
         });
 
-        // (Optional) suppress the default context menu elsewhere:
         lbl.setOnMousePressed(evt -> {
             if (evt.getButton() == MouseButton.SECONDARY) {
                 evt.consume();
             }
         });
 
-        mediaPlayerPane.getChildren().add(lbl);
+        overlayPane.getChildren().add(lbl);
 
         // center at bottom after layout
         Platform.runLater(() -> {
@@ -328,7 +328,7 @@ public class VideoController {
                 mediaPlayerPane.getChildren().remove(iv);
             }
         });
-        mediaPlayerPane.getChildren().add(iv);
+        overlayPane.getChildren().add(iv);
     }
 
     private void setupPlayheadDragging() {
@@ -353,7 +353,6 @@ public class VideoController {
             }
         }
     }
-
 
     private void onExport() {
         String name = videoName.getText().trim();

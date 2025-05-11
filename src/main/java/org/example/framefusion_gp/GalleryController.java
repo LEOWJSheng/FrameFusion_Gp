@@ -22,22 +22,18 @@ public class GalleryController {
 
     @FXML
     private Button HomeBtn;
-
     @FXML
     private Button addImageBtn;
-
     @FXML
     private FlowPane galleryFlowPane;
-
     @FXML
     private ScrollPane scrollPane;
-
     @FXML
     private Label emptyImgLabel;
-
     @FXML
     private Button makeVideoBtn;
-
+    @FXML
+    private Button composeLayoutBtn;
     private static final int IMAGE_SIZE = 120;
     private final Set<StackPane> selectedImages = new HashSet<>();
 
@@ -48,6 +44,7 @@ public class GalleryController {
         HomeBtn.setOnAction(e -> goToHome());
         makeVideoBtn.setDisable(true);
         makeVideoBtn.setOnAction(e -> makeVideo());
+
     }
 
     private void makeVideo() {
@@ -78,7 +75,6 @@ public class GalleryController {
         }
     }
 
-
     public void loadImages() {
         galleryFlowPane.getChildren().clear();
         List<ImageData> images = Database.getImages();
@@ -94,8 +90,6 @@ public class GalleryController {
             stack.setPrefSize(130, 130);
             stack.setMinSize(130, 130);
             stack.setMaxSize(130, 130);
-
-            // Style container for border, shadow, etc.
             stack.getStyleClass().add("image-cell");
 
             // Image view setup
@@ -104,7 +98,6 @@ public class GalleryController {
             view.setPreserveRatio(true);
             view.setFitWidth(IMAGE_SIZE);
             view.setFitHeight(IMAGE_SIZE);
-
             stack.getChildren().add(view);
             StackPane.setAlignment(view, Pos.CENTER);
 
@@ -115,6 +108,24 @@ public class GalleryController {
                 StackPane.setAlignment(heart, Pos.TOP_RIGHT);
                 stack.getChildren().add(heart);
             }
+
+            MenuButton menuButton = new MenuButton("⋮");
+            menuButton.setStyle("-fx-font-size: 14px; -fx-background-color: transparent;");
+            MenuItem annotateItem = new MenuItem("Edit Annotation");
+            MenuItem editItem = new MenuItem("Open Editor");
+
+            annotateItem.setOnAction(e -> {
+                try {
+                    openAnnotationEditor(data);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            });
+
+            editItem.setOnAction(e -> openImageEditor(data.getPath()));
+            menuButton.getItems().addAll(annotateItem, editItem);
+            StackPane.setAlignment(menuButton, Pos.TOP_LEFT);
+            stack.getChildren().add(menuButton);
 
             // Click: Ctrl = multi-select; else open editor
             stack.setOnMouseClicked(e -> {
@@ -186,4 +197,54 @@ public class GalleryController {
             loadImages();
         }
     }
+
+    private void openImageEditor(String imagePath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("image_editor.fxml"));
+            Parent root = loader.load();
+
+            ImageEditorController controller = loader.getController();
+            controller.setImage(new File(imagePath));
+
+            Stage stage = new Stage();
+            stage.setTitle("Image Editor");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openLayoutCompose() {
+        if (selectedImages.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "No images selected.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("layout_page.fxml"));
+            Parent root = loader.load();
+            LayoutController controller = loader.getController();
+            List<String> paths = selectedImages.stream()
+                    .map(stack -> {
+                        ImageView iv = (ImageView) stack.getChildren().get(0);
+                        String url = iv.getImage().getUrl();
+                        return url.replace("file:", "");
+                    })
+                    .toList();
+            controller.setSelectedImages(paths);
+
+            Stage stage = new Stage();
+            stage.setTitle("Composite Image");
+            stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> loadImages());
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
