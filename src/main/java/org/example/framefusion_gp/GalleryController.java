@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -44,7 +46,6 @@ public class GalleryController {
         HomeBtn.setOnAction(e -> goToHome());
         makeVideoBtn.setDisable(true);
         makeVideoBtn.setOnAction(e -> makeVideo());
-
     }
 
     private void makeVideo() {
@@ -139,15 +140,39 @@ public class GalleryController {
                     }
                     makeVideoBtn.setDisable(selectedImages.size() <= 1);
                 } else {
-                    try {
-                        openAnnotationEditor(data);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
+                    showImagePreview(data.getPath());
                 }
             });
             // Add to galleryFlowPane
             galleryFlowPane.getChildren().add(stack);
+        }
+    }
+
+    private void showImagePreview(String imagePath) {
+        try {
+            // Load a simple FXML or just build the UI in code
+            Stage preview = new Stage();
+            preview.setTitle("Preview");
+
+            ImageView iv = new ImageView(new Image("file:" + imagePath));
+            iv.setPreserveRatio(true);
+            iv.setSmooth(true);
+
+            // make it fill up to, say, 80% of the screen
+            Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+            iv.setFitWidth(bounds.getWidth() * 0.6);
+            iv.setFitHeight(bounds.getHeight() * 0.6);
+
+            StackPane root = new StackPane(iv);
+            root.setStyle("-fx-background-color: black");
+            root.setPadding(new Insets(10));
+
+            Scene scene = new Scene(root);
+            preview.setScene(scene);
+            preview.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
