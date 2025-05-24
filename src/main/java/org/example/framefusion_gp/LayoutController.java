@@ -1,5 +1,6 @@
 package org.example.framefusion_gp;
 
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
@@ -22,16 +23,20 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class LayoutController {
-
     @FXML
     private ComboBox<String> layoutSelector;
     @FXML
     private GridPane imageGrid;
     @FXML
     private Button saveBtn;
-
+    @FXML
+    private Button backBtn;
     private List<String> selectedImagePaths;
 
     @FXML
@@ -56,7 +61,6 @@ public class LayoutController {
             saveBtn.setDisable(true);
             return;
         }
-
         // Populate layout options based on number of images
         layoutSelector.getItems().clear();
         if (size == 2) {
@@ -176,19 +180,45 @@ public class LayoutController {
         params.setFill(Color.TRANSPARENT);
         WritableImage snapshot = imageGrid.snapshot(params, null);
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Composite Layout");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG Image", "*.png"));
-        File file = fileChooser.showSaveDialog(imageGrid.getScene().getWindow());
+        try {
+            // Convert to BufferedImage
+            java.awt.image.BufferedImage bufferedImage = SwingFXUtils.fromFXImage(snapshot, null);
 
-        if (file != null) {
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
-                Database.insertImage(file.getAbsolutePath(), ""); // optional DB insert
-                ((Stage) imageGrid.getScene().getWindow()).close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            // Create directory if not exists
+            File dir = new File("exported");
+            if (!dir.exists()) {
+                dir.mkdirs();
             }
+
+            // Save file silently
+            String filename = "layout_" + System.currentTimeMillis() + ".png";
+            File outFile = new File(dir, filename);
+            ImageIO.write(bufferedImage, "png", outFile);
+
+            // Save relative path to DB
+            String virtualPath = outFile.getAbsolutePath();
+            Database.insertImage(virtualPath, "");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Saved");
+            alert.setHeaderText("Layout saved to database and exported folder.");
+            alert.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void back() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("gallery.fxml"));
+            Parent homeRoot = loader.load();
+            Scene scene = new Scene(homeRoot);
+            Stage stage = (Stage) backBtn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

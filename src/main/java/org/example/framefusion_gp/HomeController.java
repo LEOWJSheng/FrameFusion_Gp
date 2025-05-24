@@ -10,11 +10,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HomeController {
-        @FXML
-        private Button galleryBtn;
 
-        @FXML
-        private Button videoBtn;
+    @FXML
+    private Button galleryBtn;
+
+    @FXML
+    private Button videoBtn;
 
     public void initialize() {
         galleryBtn.setOnAction(e -> goToGallery());
@@ -24,7 +25,7 @@ public class HomeController {
     @FXML
     private void goToVideo() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("video_page.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("videoPageController.fxml"));
             Parent homeRoot = loader.load();
             Scene scene = new Scene(homeRoot);
             Stage stage = (Stage) videoBtn.getScene().getWindow();

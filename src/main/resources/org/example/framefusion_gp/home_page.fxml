@@ -24,7 +24,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="1100.0" styleClass="blackBg" stylesheets="@gallery.css">
+      <VBox alignment="CENTER" prefHeight="540.0" prefWidth="1100.0" styleClass="blackBg" stylesheets="@gallery.css" VBox.vgrow="ALWAYS">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
