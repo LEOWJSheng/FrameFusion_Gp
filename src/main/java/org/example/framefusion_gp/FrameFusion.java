@@ -26,6 +26,7 @@ public class FrameFusion extends Application {
     }
 
     public static void main(String[] args) {
+        Database.initializeDatabase();
         launch();
     }
 }

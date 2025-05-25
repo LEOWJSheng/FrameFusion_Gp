@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="blackBg" stylesheets="@gallery.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.framefusion_gp.VideoPageController">
+    <children>
+        <AnchorPane prefHeight="60.0" prefWidth="200.0" styleClass="titleBg">
+            <children>
+                <Label prefHeight="60.0" prefWidth="180.0" styleClass="title" text="Video">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </Label>
+            </children>
+        </AnchorPane>
+        <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="460.0" minWidth="1100.0" styleClass="blackBg" VBox.vgrow="ALWAYS">
+            <content>
+                <FlowPane fx:id="videoFlowPane" hgap="5.0" minHeight="460.0" minWidth="1100.0" styleClass="blackBg" vgap="5.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="emptyVidLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="460.0" minWidth="1100.0" styleClass="blackBg" text=" No video yet. Click to add video" textAlignment="JUSTIFY" textFill="WHITE">
+                            <font>
+                                <Font name="Georgia" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </FlowPane>
+            </content>
+        </ScrollPane>
+        <HBox>
+            <children>
+                <Button fx:id="HomeBtn" mnemonicParsing="false" prefHeight="37.0" prefWidth="106.0" text="Home">
+                    <HBox.margin>
+                        <Insets bottom="15.0" left="15.0" top="15.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+</VBox>
